@@ -33,7 +33,24 @@ public class Arrays {
     }
 
     public static int countSubKSequences(int[] a, int k){
-        throw new UnsupportedOperationException();
+        if(k == 0 || a.length == 0) return 0;
+        if(k == 1) return a.length;
+
+        int currentSequence = 1;
+        int num_Sequence = 0;
+
+        for(int i = 0; i < a.length-1; i++){
+            if(a[i] + 1 == a[i + 1] || a[i] == a[i + 1]){
+                currentSequence++;
+            }
+            else{
+                num_Sequence += currentSequence - k + 1;
+                currentSequence = 1;
+            }
+        }
+
+        if(currentSequence >= k) num_Sequence += currentSequence - k + 1;
+        return num_Sequence;
     }
 
     public static int median(int[] v, int l, int r){
