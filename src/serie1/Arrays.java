@@ -1,7 +1,5 @@
 package serie1;
 
-import java.lang.reflect.Array;
-
 public class Arrays {
 
     public static int lowerBound(int[] array, int l,int r, int val){
@@ -41,9 +39,7 @@ public class Arrays {
         int currentSequence = 1;
         int num_Sequence = 0;
 
-        int p1 = 0, p2 = 0;
-
-        while(p1 ){
+        for(int i = 0; i < a.length-1; i++){
             if(a[i] + 1 == a[i + 1] || a[i] == a[i + 1]){
                 currentSequence++;
             }
