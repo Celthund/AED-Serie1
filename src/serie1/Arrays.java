@@ -36,40 +36,44 @@ public class Arrays {
         if(k == 0 || a.length == 0) return 0;
         if(k == 1) return a.length;
 
-        int currentSequence = 1;
-        int num_Sequence = 0;
+        int l = 0, r = 1, sum = a[l], sequencesCounter = 0;
 
-        for(int i = 0; i < a.length-1; i++){
-            if(a[i] + 1 == a[i + 1] || a[i] == a[i + 1]){
-                currentSequence++;
+        while(r < a.length ){
+            if(a[r] == a[r - 1] + 1 || a[r] == a[r - 1]){
+                sum += a[r];
+                if(r - l < k - 1)
+                    r++;
+                else if(r - l == k - 1){
+                    sequencesCounter += (sum % k == 0)? 1 : 0;
+                    sum -= a[l];
+                    l++;
+                }
             }
             else{
-                num_Sequence += currentSequence - k + 1;
-                currentSequence = 1;
+                l = r;
+                r++;
+                sum = a[l];
             }
         }
 
-        if(currentSequence >= k) num_Sequence += currentSequence - k + 1;
-        return num_Sequence;
+        if(r - l == k)
+            sequencesCounter += (sum % k == 0)? 1 : 0;
+
+        return sequencesCounter;
     }
 
     public static int median(int[] v, int l, int r){
-        int[] tmpArray;
-        r++;
-        if (r < v.length - 1) {
-            tmpArray = new int[r];
-            for (int i = 0; i < r; i++)
-                tmpArray[i] = v[i];
-        }
-        else
-            tmpArray = v.clone();
+        if(l > r || l < 0 || r >= v.length) return -1;
+        int[] tmpArray = new int[r - l + 1];
+        for (int i = 0; i + l <= r; i++)
+            tmpArray[i] = v[i + l];
 
         MergeSort.mergeSort(tmpArray);
-        int res = (l + r) / 2 - 1;
-        if((l + r) % 2 == 0)
+        int res = tmpArray.length / 2;
+        if(tmpArray.length % 2 == 0)
             return (tmpArray[res] + tmpArray[res + 1]) / 2;
         else
-            return tmpArray[res + 1];
+            return tmpArray[res];
     }
 
     public static int mostLonely(int[] a){
