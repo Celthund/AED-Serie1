@@ -54,11 +54,45 @@ public class Arrays {
     }
 
     public static int median(int[] v, int l, int r){
-        throw new UnsupportedOperationException();
+        int[] tmpArray;
+        r++;
+        if (r < v.length - 1) {
+            tmpArray = new int[r];
+            for (int i = 0; i < r; i++)
+                tmpArray[i] = v[i];
+        }
+        else
+            tmpArray = v.clone();
+
+        MergeSort.mergeSort(tmpArray);
+        int res = (l + r) / 2 - 1;
+        if((l + r) % 2 == 0)
+            return (tmpArray[res] + tmpArray[res + 1]) / 2;
+        else
+            return tmpArray[res + 1];
     }
 
     public static int mostLonely(int[] a){
-        throw new UnsupportedOperationException();
+        if(a.length == 1) return a[0];
+
+        int[] tmpArray = a.clone();
+
+        MergeSort.mergeSort(tmpArray);
+
+        int k = tmpArray[1] - tmpArray[0], idx = 0;
+
+        for (int i = 1; i < a.length - 1; i++){
+            int aux = Math.min(tmpArray[i] - tmpArray[i-1], tmpArray[i + 1] - tmpArray[i]);
+            if(k < aux){
+                k = aux;
+                idx = i;
+            }
+        }
+
+        if(k < tmpArray[tmpArray.length - 1] - tmpArray[tmpArray.length - 2])
+            idx = tmpArray.length - 1;
+
+        return tmpArray[idx];
     }
 
 }
