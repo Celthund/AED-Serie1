@@ -33,13 +33,13 @@ public class Arrays {
     }
 
     public static int countSubKSequences(int[] a, int k){
-        if(k == 0 || a.length == 0) return 0;
+        if(k == 0 || a.length == 0 || a.length == 1 && k > 1) return 0;
         if(k == 1) return a.length;
 
-        int l = 0, r = 1, sum = a[l], sequencesCounter = 0;
-
+        int l = 0, r = 1, sequencesCounter = 0,
+                sum = a[l], sequenceJump = a[r] - a[l] ;
         while(r < a.length ){
-            if(a[r] == a[r - 1] + 1 || a[r] == a[r - 1]){
+            if(a[r] == a[r - 1] + sequenceJump){
                 sum += a[r];
                 if(r - l < k - 1)
                     r++;
@@ -53,6 +53,8 @@ public class Arrays {
                 l = r;
                 r++;
                 sum = a[l];
+                if (r < a.length)
+                    sequenceJump = a[r] - a[l];
             }
         }
 

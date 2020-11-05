@@ -27,6 +27,18 @@ public class CountSubKSequencesTest {
     }
 
     @Test
+    public void countSubKSequences_IncrementOfTwo(){
+        int[] a= {3,6,9,12,1};
+        assertEquals(2,countSubKSequences(a,3));
+    }
+
+    @Test
+    public void countSubKSequences_DecrementOfTwo(){
+        int[] a= {12, 9, 6, 3,1};
+        assertEquals(2,countSubKSequences(a,3));
+    }
+
+    @Test
     public void countSubKSequences_AllEquals(){
         int[] a={3,3,3,3,3,3,3};
         assertEquals(7,countSubKSequences(a,1));
