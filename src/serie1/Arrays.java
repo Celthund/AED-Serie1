@@ -73,7 +73,7 @@ public class Arrays {
         MergeSort.mergeSort(tmpArray);
         int res = tmpArray.length / 2;
         if(tmpArray.length % 2 == 0)
-            return (tmpArray[res] + tmpArray[res + 1]) / 2;
+            return (tmpArray[res] + tmpArray[res - 1]) / 2;
         else
             return tmpArray[res];
     }
