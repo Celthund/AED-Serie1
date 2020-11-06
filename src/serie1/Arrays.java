@@ -2,16 +2,24 @@ package serie1;
 
 public class Arrays {
 
-    public static int lowerBound(int[] array, int l,int r, int val){
-        if (r >= array.length || l < 0 || l > r || val > array[r]) return ++r;
+    public static int lowerBound(int[] array, int l,int r, int val) {
+        if (l < 0 || r < 0 || l > array.length || l > r)
+            return -1;
+        return checkLowerBound(array, l, r, val);
+    }
+
+    private static int checkLowerBound(int[] array, int l, int r, int val) {
+        if (r >= array.length || l < 0 || l > r || val > array[r])
+            return ++r;
 
         int mid = (l + r) / 2;
 
-        if(array[mid] < val)
-            return lowerBound(array, ++mid, r, val);
+        if (array[mid] < val)
+            return checkLowerBound(array, ++mid, r, val);
         else
-            return lowerBound(array, l, --mid, val);
+            return checkLowerBound(array, l, --mid, val);
     }
+
 
     public static int findMinDifference(int[] elem1, int[] elem2) {
         if(elem1.length == 0 || elem2.length == 0) return -1;
@@ -24,8 +32,8 @@ public class Arrays {
 
             minimumDifference = Math.min(minimumDifference, Math.abs(elem1[i] - elem2[j]));
 
-            if(elem1[i] > elem2[j]) i++;
-            else j++;
+            if(elem1[i] > elem2[j]) j++;
+            else i++;
 
         }
 
