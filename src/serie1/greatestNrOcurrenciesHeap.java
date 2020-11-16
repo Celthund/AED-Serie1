@@ -3,7 +3,7 @@ package serie1;
 import java.io.*;
 import java.util.Scanner;
 
-public class exercise2_our {
+public class greatestNrOcurrenciesHeap {
 
     public static void main(String[] args) {
 

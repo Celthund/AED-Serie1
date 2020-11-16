@@ -4,8 +4,7 @@ import java.io.*;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
-
-public class exercise2 {
+public class greatestNrOcurrenciesJava {
 
     public static void main(String[] args) {
 
