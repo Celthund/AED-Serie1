@@ -7,11 +7,39 @@ public class greatestNrOcurrenciesHeap {
 
     public static void main(String[] args) {
 
-        //Array to store the names of all the files that will be used
-        String files[] = {"f1.txt", "f2.txt", "f3.txt"};
+        if (args.length < 1){
+            System.out.println("Missing operation.");
+            System.exit(0);
+        }
 
+        String operation = args[0];
+
+        if (operation == "exit")
+            System.exit(0);
+
+        if (args.length < 2){
+            System.out.println("Missing output file.");
+            System.exit(0);
+        }
+
+        int k = Integer.parseInt(args[1]);
+
+        if (args.length < 3){
+            System.out.println("Missing input files.");
+            System.exit(0);
+        }
         //Stores the input file
-        String output_file = "f0.txt";
+        String output_file = args[2];
+
+        if (args.length < 4){
+            System.out.println("Missing output files.");
+            System.exit(0);
+        }
+        //Array to store the names of all the files that will be used
+        String files[] = new String[args.length - 3];
+        for (int i = 3; i < args.length; i++){
+            files[i - 3] = args[i];
+        }
 
         //Will store all the input files
         Scanner scanners[] = new Scanner[files.length];
@@ -38,25 +66,23 @@ public class greatestNrOcurrenciesHeap {
             System.exit(-2);
         }
 
-        int oper = 1, k = 10;
-
         //Switch case to know which tasks the user wants to do
-        switch (oper) {
-            case 0:
+        switch (operation) {
+            case "get":
 
                 //Calls the get() method to show the k words that occur more times
                 writeToFile(out, get(k, scanners).toArray());
                 break;
-            case 1:
+            case "sort":
 
                 //Calls the sort() method that orders by alphabetic order the k words
                 //that occur more times
                 writeToFile(out, sort(k, scanners));
                 break;
             default:
-
+                System.out.println("No valid operation.");
                 //Leaves the program
-                System.exit(-1);
+                System.exit(0);
         }
 
         //Closes all the files
