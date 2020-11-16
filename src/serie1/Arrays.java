@@ -23,7 +23,7 @@ public class Arrays {
         int mid = (l + r) / 2;
 
         //As the array is always in order it knows that if the value in the middle position
-        //is less than the value inputed by the user it will be in the upper half of the array
+        //is less than the value inputted by the user it will be in the upper half of the array
         //If is more, it will be in the lower half
         if (array[mid] < val)
             return checkLowerBound(array, ++mid, r, val);
@@ -58,8 +58,38 @@ public class Arrays {
         return minimumDifference;
     }
 
-
     public static int countSubKSequences(int[] a, int k){
+        // Check if array is empty or length is equal to 1.
+        if(k == 0 || a.length == 0 || a.length == 1 && k > 1) return 0;
+        if(k == 1) return a.length;
+
+        // Create 2 pointers to do a windows with k elements.
+        int l = 0, r = 1, sequencesCounter = 0, sum = a[l];
+        while(r < a.length){
+            sum += a[r];
+            // If the distance between left and right is less than k increment k.
+            if(r - l < k - 1)
+                r++;
+            // else check if the sum of the elements between left and right are divisible by k.
+            else if(r - l == k - 1){
+                sequencesCounter += (sum % k == 0) ? 1 : 0;
+                sum -= a[l];
+                l++;
+                r++;
+            }
+        }
+        return sequencesCounter;
+    }
+
+    /**
+     * Return the number of sequences of size k in a array.
+     * Note in this implementation a sequence is a k elements seperate by the same distance.
+     * Example 1 2 3 or 2 4 6 or 3 6 9.
+     * @param a
+     * @param k
+     * @return
+     */
+    public static int countSubKSequencesOld(int[] a, int k){
         if(k == 0 || a.length == 0 || a.length == 1 && k > 1) return 0;
         if(k == 1) return a.length;
 
@@ -126,7 +156,7 @@ public class Arrays {
         //element
         if(a.length == 1) return a[0];
 
-        //Copys the v array to the tmpArray array
+        //Copy the v array to the tmpArray array
         int[] tmpArray = a.clone();
 
         //Orders the array

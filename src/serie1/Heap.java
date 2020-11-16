@@ -29,7 +29,7 @@ public class Heap<T>{
         return this.num_elements;
     }
 
-    //Adds a new element to the heap and heapyfys it right after
+    //Adds a new element to the heap and heapify up right after.
     public void add(T a) {
 
         //If the heap is currently at max size, it will increments its side by 2 times
@@ -44,7 +44,7 @@ public class Heap<T>{
         heapifyUp(num_elements);
     }
 
-    //Removes the root of the heap and heapifys it right after
+    //Removes the root of the heap and heapify down right after.
     public T poll() {
 
         //If theres is no elements just returns null
@@ -101,8 +101,8 @@ public class Heap<T>{
         System.arraycopy(array, 0 , new_array, 0, num_elements);
     }
 
-    //Heapifys all the Heap by calling heapify starting on the parents of the leafs and finishing
-    //on the childs of the root
+    //Heapify all the Heap by calling heapify starting on the parents of the leafs and finishing
+    //on the child of the root
     private void heapifyFull(){
         for (int i = num_elements / 2; i > 0; i--){
             heapifyDown(i);
@@ -133,7 +133,7 @@ public class Heap<T>{
         heapifyUp(parentPosition);
     }
 
-    //Heapifys starting at the rot
+    //Heapify starting at the rot
     private void heapifyDown(int current_position){
         //Terminal case. Check if there is a left child, if it doesnt exist it will just end
         if (current_position * 2 > num_elements) return;
@@ -141,7 +141,7 @@ public class Heap<T>{
         //Checks the child of the element in the current position being checked
         int child_position;
 
-        //Checks for childs on the right side, if the child position on the right is greater
+        //Checks for child on the right side, if the child position on the right is greater
         //than the current Heap size, then there is no right child, and so the current child
         //will become the left child
         if (((current_position * 2) + 1) > num_elements){
