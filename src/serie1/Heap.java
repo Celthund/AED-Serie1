@@ -97,8 +97,11 @@ public class Heap<T>{
     //Increases the Heap by 2 times is size
     private void resizeArray() {
         this.size *= 2;
-        T[] new_array = (T[]) new Objects[this.size];
-        System.arraycopy(array, 0 , new_array, 0, num_elements);
+        Object[] new_array = new Object[this.size];;
+        if (num_elements > 0) {
+            System.arraycopy(array, 0, new_array, 0, num_elements);
+            array = (T[]) new_array;
+        }
     }
 
     //Heapify all the Heap by calling heapify starting on the parents of the leafs and finishing

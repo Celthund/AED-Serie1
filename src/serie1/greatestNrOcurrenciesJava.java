@@ -4,10 +4,12 @@ import java.io.*;
 import java.util.PriorityQueue;
 import java.util.Scanner;
 
+import static java.lang.System.nanoTime;
+
 public class greatestNrOcurrenciesJava {
 
     public static void main(String[] args) {
-
+        double start_time = nanoTime() * 1e-6;
         if (args.length < 1){
             System.out.println("Missing operation.");
             System.exit(0);
@@ -92,6 +94,8 @@ public class greatestNrOcurrenciesJava {
         for (int i = 0; i < scanners.length; i++) {
             scanners[i].close();
         }
+        double end_time = nanoTime() * 1e-6;
+        System.out.printf("%.2f\n", end_time-start_time);
     }
 
     public static void writeToFile(PrintWriter output, Object[] array){
@@ -125,7 +129,6 @@ public class greatestNrOcurrenciesJava {
 
     public static PriorityQueue<Tuple> get(int k, Scanner scanners[]){
         int counter, min_pos = 0;
-        boolean flag;
 
         //String to store the words that occur more times
         String words[] = new String[scanners.length];
@@ -170,7 +173,6 @@ public class greatestNrOcurrenciesJava {
 
         //Cycle that will run trough the file and check for most occurrences of the k words
         while (true) {
-
             //Checks if the current file has more words
             if (scanners[min_pos].hasNextLine()){
 
@@ -190,8 +192,9 @@ public class greatestNrOcurrenciesJava {
                     //If the alphabetically lowest word is different from the current word
                     //being checked it will store it in our Tuple class as a new word to then
                     //check how many times it occurs
-                    if (current_word.compareTo(words[min_pos]) != 0){
-
+                    if (current_word.compareTo(words[min_pos]) == 0)
+                        counter++;
+                    else if (current_word.compareTo(words[min_pos]) != 0){
                         //Stores the new word in the Tuple class
                         Tuple a = new Tuple(current_word, counter);
 
@@ -211,27 +214,20 @@ public class greatestNrOcurrenciesJava {
                         }
 
                         //the current word will now become the word on the min_pos and the counter
-                        //is reseted to check for more words
+                        //is reset to check for more words
                         current_word = words[min_pos];
                         counter = 1;
                     }
                 }
             } else {
-                //The word in that position becamos null to check for the next word we will read
+                //The word in that position is set to null to check for the next word we will read
                 words[min_pos] = null;
                 min_pos = getMinPosition(words);
-                flag = false;
+                if (words[min_pos] != null && current_word.equals(words[min_pos]))
+                    counter++;
 
-                //Runs trough all the files to see who still has more words to read
-                for (int i = 0; i < scanners.length; i++){
-                    if (scanners[i].hasNextLine()){
-                        flag = true;
-                        break;
-                    }
-                }
-
-                //If one or more of the files still has words then it will check that word
-                if (flag)
+                //If the min position is null it means there are no more elements to count.
+                if (words[min_pos] != null)
                     continue;
 
                 //If not that means the it reached the end of all the files it increments the counter
