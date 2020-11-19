@@ -1,6 +1,5 @@
 package serie1;
 import java.util.Comparator;
-import java.util.Objects;
 
 
 public class Heap<T>{
@@ -41,7 +40,7 @@ public class Heap<T>{
         array[num_elements++] = a;
 
         //Organizes the elements from leaf to root
-        heapifyUp(num_elements);
+        siftUp(num_elements);
     }
 
     //Removes the root of the heap and heapify down right after.
@@ -61,8 +60,8 @@ public class Heap<T>{
         array[num_elements - 1] = null;
         num_elements--;
 
-        //When it finds an elements heapifys it o organize the heap
-        heapifyDown(1);
+        //When it finds an elements siftDown it o organize the heap
+        siftDown(1);
 
         //Returns the removed element
         return element;
@@ -74,10 +73,10 @@ public class Heap<T>{
         return array[0];
     }
 
-    //Repleaces the root of the Heap and heapifys it so it stays organized
+    //Repleaces the root of the Heap and siftDown it so it stays organized
     public void replaceHead(T head){
         array[0] = head;
-        heapifyDown(1);
+        siftDown(1);
     }
 
     //Passes the Heap to an array
@@ -91,7 +90,7 @@ public class Heap<T>{
     //Swaps the comparators being used
     public void changeComparator(Comparator<T> comparator){
         this.comparator = comparator;
-        heapifyFull();
+        heapify();
     }
 
     //Increases the Heap by 2 times is size
@@ -104,11 +103,11 @@ public class Heap<T>{
         }
     }
 
-    //Heapify all the Heap by calling heapify starting on the parents of the leafs and finishing
+    //Heapify all the Heap by calling siftDown starting on the parents of the leafs and finishing
     //on the child of the root
-    private void heapifyFull(){
+    private void heapify(){
         for (int i = num_elements / 2; i > 0; i--){
-            heapifyDown(i);
+            siftDown(i);
         }
     }
 
@@ -119,8 +118,8 @@ public class Heap<T>{
         array[pos2] = tmp;
     }
 
-    //Heapifys starting at the leaf
-    private void heapifyUp(int current_position){
+    //siftDown starting at the leaf
+    private void siftUp(int current_position){
         //Terminal case. Check if root element.
         if (current_position == 1) return;
 
@@ -133,11 +132,11 @@ public class Heap<T>{
             switchElements(current_position - 1, parentPosition - 1);
 
         //Recursively do the same for all the parents till it reaches the root
-        heapifyUp(parentPosition);
+        siftUp(parentPosition);
     }
 
-    //Heapify starting at the rot
-    private void heapifyDown(int current_position){
+    //siftDown starting at the rot
+    private void siftDown(int current_position){
         //Terminal case. Check if there is a left child, if it doesnt exist it will just end
         if (current_position * 2 > num_elements) return;
 
@@ -162,7 +161,7 @@ public class Heap<T>{
         //child is greater than the parent
         if (comparator.compare(array[child_position - 1], array[current_position - 1]) < 0) {
             switchElements(current_position - 1, child_position - 1);
-            heapifyDown(child_position);
+            siftDown(child_position);
         }
     }
 }
